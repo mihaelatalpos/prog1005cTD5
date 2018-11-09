@@ -31,6 +31,12 @@ void tests_partie1()
 	//TODO: Ajouter 3 fois une cible (ajouterCible) à la cibles, chacun avec un ID différent (les autres valeurs ne sont pas importantes);
 	//TODO: après chaque ajout vérifier que le nombre de cibles est bon (i.e. 1 après le premier ajout, 2 après le deuxième), et que les données de la cible sont dans la liste (vérifiez uniquement l'ID).
 	//TODO: Ajouter une autre cible, le nombre d'éléments devrait être encore 3 puisque c'est la capacité de la liste.
+	for (int i = 0; i < 3; i++) {
+		ajouterCible(cibles, tableauCibles[i]);
+		cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
+		cout << "L'ID de la cible est: " << tableauCibles[i].id << endl;
+	}
+	
 
 	//TODO: Retirer la cible (retirerCible) ayant l'ID que vous avez mis en 2e, vérifier qu'il reste 2 éléments aux indices 0 et 1 dont les ID sont les bons.
 

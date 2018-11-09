@@ -29,7 +29,7 @@ void ajouterCible(ListeCibles& liste, const Cible& element)
 {
 	// TODO: S'il reste de la place, ajouter l'élément à la fin.
 	if (liste.nbElements != liste.capacite) {
-		liste.elements = element;
+		liste.elements[liste.nbElements] = element;
 		liste.nbElements++;
 	}
 }
