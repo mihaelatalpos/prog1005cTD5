@@ -37,6 +37,7 @@ void ajouterCible(ListeCibles& liste, const Cible& element)
 
 void retirerCible(ListeCibles& liste, uint32_t id)
 {
+	
 	// TODO: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
