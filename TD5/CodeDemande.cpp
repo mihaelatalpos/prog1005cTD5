@@ -43,7 +43,7 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 			liste.elements[i].id = liste.elements[i + 1].id;
 		}
 	}
-	// TODO: Rechercher la cible avec le même ID et le retirer de la liste si
+	// DONE: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
 }
@@ -51,6 +51,7 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
+	while(cibles)
 	// TODO: Tant que la fin de fichier n'est pas atteinte :
 		// TODO: Lire une 'Cible' à partir du ficher à la position
 		//       courante et l'ajouter à la liste.
