@@ -28,10 +28,8 @@ using namespace std;
 void ajouterCible(ListeCibles& liste, const Cible& element)
 {
 	// TODO: S'il reste de la place, ajouter l'élément à la fin.
-	if (liste.nbElements != liste.capacite) {
-		liste.elements[liste.nbElements] = element;
-		liste.nbElements++;
-	}
+	if (liste.nbElements != liste.capacite) 
+		liste.elements[liste.nbElements++] = element;
 }
 
 
@@ -43,7 +41,7 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 			liste.elements[i].id = liste.elements[i + 1].id;
 		}
 	}
-	// DONE: Rechercher la cible avec le même ID et le retirer de la liste si
+	// TODO: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
 }
@@ -51,7 +49,6 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
-	while(cibles)
 	// TODO: Tant que la fin de fichier n'est pas atteinte :
 		// TODO: Lire une 'Cible' à partir du ficher à la position
 		//       courante et l'ajouter à la liste.
@@ -61,18 +58,38 @@ void lireCibles(istream& fichier, ListeCibles& cibles)
 void ecrireCibles(ostream& fichier, const ListeCibles& cibles)
 {
 	// TODO: Écrire tous les éléments de la liste dans le fichier à partir de la position courante.
+	/*Notes pour moi-meme:
+	On veut seulement ecrire les elements de la struct ListeCibles (qui contient aussi le nb et la capacite)
+	Donc, cibles.elements
+	Pour ecrire tous les elements d'un coup, il faut connaitre la longueur du tableau ou ces elements sont stores
+	Sachant qu'un element est de type stuct Cible, sizeof(Cible) est la longure de UN element
+	Donc, cibles.nbElement * sizeof(Cibles) retourne la longueur de tous les elements Cible
+	*/
+	fichier.seekp(0, ios::cur);
+	fichier.write((char*)cibles.elements , cibles.nbElements * sizeof(Cible));
 }
 
 
 void ecrireJournalDetection(const string& nomFichier, const JournalDetection& journal, bool& ok)
 {
 	// TODO: Ouvrir un fichier en écriture binaire.
-	
+	ofstream ficBin;
+	ficBin.open(nomFichier, ios::binary);
+
 	// TODO: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
-	
+	if (ficBin.fail())
+		ok = false;
+	else
+		ok = true;
+			
 	// TODO: Écrire les paramètres de mission dans le fichier.
+	//question: quelle position il faut commencer a ecrire?
+	ficBin.seekp(0, ios::cur);
+	ficBin.write((char*)&journal.parametres, sizeof(journal.parametres));
 	
 	// TODO: Écrire les cibles dans le fichier.
+	ficBin.seekp(0, ios::cur);
+	ficBin.write((char*)&journal.cibles, sizeof(journal.cibles));
 }
 
 
