@@ -36,6 +36,8 @@ void tests_partie1()
 		cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
 		cout << "L'ID de la cible est: " << tableauCibles[i].id << endl;
 	}
+	ajouterCible(cibles, tableauCibles[4]);
+	cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
 	
 
 	//TODO: Retirer la cible (retirerCible) ayant l'ID que vous avez mis en 2e, vérifier qu'il reste 2 éléments aux indices 0 et 1 dont les ID sont les bons.
