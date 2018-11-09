@@ -38,6 +38,11 @@ void ajouterCible(ListeCibles& liste, const Cible& element)
 void retirerCible(ListeCibles& liste, uint32_t id)
 {
 	
+	for (int i = 0; i < liste.nbElements; i++) {
+		if(liste.elements[i].id == id){
+			liste.elements[i].id = liste.elements[i + 1].id;
+		}
+	}
 	// TODO: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
