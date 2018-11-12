@@ -109,6 +109,14 @@ void ecrireObservation(const string& nomFichier, size_t index, const string& obs
 	//       Astuce : strcpy()
 	
 	// TODO: Réécrire la cible (et seulement celle-là) dans le fichier.
+
+	fstream ficBin(nomFichier, ios::in | ios::out | ios::binary);
+	ficBin.seekp(((index + 1) * sizeof(Cible)), ios::beg);
+	Cible cible;
+	ficBin.read((char*)&cible, sizeof(cible));
+	
+	strcpy_s(cible.observation, observation.c_str());
+
 }
 
 
