@@ -44,6 +44,7 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 	// TODO: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
+	
 }
 
 
@@ -52,6 +53,8 @@ void lireCibles(istream& fichier, ListeCibles& cibles)
 	// TODO: Tant que la fin de fichier n'est pas atteinte :
 		// TODO: Lire une 'Cible' à partir du ficher à la position
 		//       courante et l'ajouter à la liste.
+
+	//note: utilisr ajouter cible
 }
 
 
@@ -64,9 +67,10 @@ void ecrireCibles(ostream& fichier, const ListeCibles& cibles)
 	Pour ecrire tous les elements d'un coup, il faut connaitre la longueur du tableau ou ces elements sont stores
 	Sachant qu'un element est de type stuct Cible, sizeof(Cible) est la longure de UN element
 	Donc, cibles.nbElement * sizeof(Cibles) retourne la longueur de tous les elements Cible
+	On ne peut pas utiliser directement sizeof(cibles.elements), puisque c'est un pointeur vers un tableau.
 	*/
 	fichier.seekp(0, ios::cur);
-	fichier.write((char*)cibles.elements , cibles.nbElements * sizeof(Cible));
+	fichier.write((char*)cibles.elements, cibles.nbElements * sizeof(Cible));
 }
 
 
@@ -111,11 +115,18 @@ void ecrireObservation(const string& nomFichier, size_t index, const string& obs
 	// TODO: Réécrire la cible (et seulement celle-là) dans le fichier.
 
 	fstream ficBin(nomFichier, ios::in | ios::out | ios::binary);
-	ficBin.seekp(((index + 1) * sizeof(Cible)), ios::beg);
-	Cible cible;
-	ficBin.read((char*)&cible, sizeof(cible));
+
 	
+	ficBin.seekg(((index + 1) * sizeof(Cible)), ios::beg); //positionnement au debut de la 3e cible
+
+	Cible cible;
+	ficBin.read((char*)&cible, sizeof(cible));	
+
 	strcpy_s(cible.observation, observation.c_str());
+
+	ficBin.seekp((-1 * streamoff(sizeof(Cible))), ios::beg); //repositionnement au debut de la 3e cible
+
+	ficBin.write((char*)&cible, sizeof(cible));
 
 }
 

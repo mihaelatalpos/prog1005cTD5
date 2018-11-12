@@ -31,31 +31,58 @@ void tests_partie1()
 	//TODO: Ajouter 3 fois une cible (ajouterCible) à la cibles, chacun avec un ID différent (les autres valeurs ne sont pas importantes);
 	//TODO: après chaque ajout vérifier que le nombre de cibles est bon (i.e. 1 après le premier ajout, 2 après le deuxième), et que les données de la cible sont dans la liste (vérifiez uniquement l'ID).
 	//TODO: Ajouter une autre cible, le nombre d'éléments devrait être encore 3 puisque c'est la capacité de la liste.
+
+	Cible ciblesTest[4];
+	for (int i = 0; i < 4; i++)
+		ciblesTest[i] = { (uint32_t)(1 * i), { 1.0, 1.0 }, "observation", "nomFichier" };
+	
 	for (int i = 0; i < 3; i++) {
-		ajouterCible(cibles, tableauCibles[i]);
+		ajouterCible(cibles, ciblesTest[i]);
 		cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
-		cout << "L'ID de la cible est: " << tableauCibles[i].id << endl;
+		cout << "L'ID de la cible est: " << cibles.elements[i].id << endl;
 	}
-	ajouterCible(cibles, tableauCibles[4]);
+
+	ajouterCible(cibles, ciblesTest[4]);
 	cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
 	
 
 	//TODO: Retirer la cible (retirerCible) ayant l'ID que vous avez mis en 2e, vérifier qu'il reste 2 éléments aux indices 0 et 1 dont les ID sont les bons.
 
-	fstream fichierTestCibles("fichierTestCibles.bin", ios::in | ios::out  | ios::trunc | ios::binary);
+	fstream fichierTestCibles("fichierTestCibles.bin", ios::in | ios::out | ios::trunc | ios::binary);
+	//note: utliser la ListeCibles cibles
 
 	//TODO: Écrire les cibles (ecrireCibles) dans le fichier fichierTestCibles. Vérifier que la tête d'écriture est rendue au bon endroit.
+	
+	ecrireCibles(fichierTestCibles, cibles);
+	if (fichierTestCibles.tellp() == (cibles.nbElements * sizeof(Cible)))
+		cout << "La tete de lecture est a la bonne place." << endl;
+	else
+		cout << "La tete de lecture n'est pas a la bonne place." << endl;
 
 	Cible tableauCibles2[3] = {};
 	ListeCibles cibles2 = { tableauCibles2, 0, size(tableauCibles) };
-
+	
 	//TODO: Remettre la tête de lecture au début du fichier puis lire les cibles (lireCibles) dans cibles2. Vérifier que les 2 bonnes cibles y sont.
+	
+	fichierTestCibles.seekg(0, ios::beg);
 
 	//TODO: Créer une variable de type JournalDetection avec des valeurs quelconques et une ListeCibles déjà créé ci-dessus.
 	//TODO: Écrire ce journal (ecrireJournalDetection) dans un nouveau fichier binaire.
 	//TODO: Vérifier que ok est vrai.
 	//NOTE: La relecture du fichier pour vérifier qu'il est bon se fera seulement dans la partie 2.  Vous pouvez pour l'instant vérifier que la taille du fichier est bonne (propriétés du fichier dans Windows; la "taille" en octets devrait être une taille d'entête plus le bon nombre de cibles; attention de ne pas regarder la "taille sur disque" qui peut être différente de la "taille" dans les propriétés du fichier).  Vous pouvez aussi ouvrir le fichier binaire avec un éditeur binaire (par exemple celui de VisualStudio) pour voir si les ID sont bien dans le fichier.
 
+	time_t t = time(0);
+	tm* now = localtime(&t);
+	ParametresMission parametres = {"sonnom", "quelquesnotes", *now};
+	JournalDetection journalTest = {parametres, cibles};
+
+	bool ok;
+	ecrireJournalDetection("fichierTestCibles.bin", journalTest, ok);
+	if (ok)
+		cout << "L'ouverture a reussie." << endl;
+	else
+		cout << "L'ouverture a echouee." << endl;
+	   	 
 	//TODO: Ajouter une observation (ecrireObservation) au fichier créé ci-dessus à l'indice 1 (deuxième cible).
 	//NOTE: Même chose que ci-dessus: la taille du fichier ne devrait pas avoir changée, et dans l'éditeur binaire vous devriez voir le texte après le deuxième ID.
 
