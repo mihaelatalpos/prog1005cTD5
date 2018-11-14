@@ -28,23 +28,25 @@ using namespace std;
 void ajouterCible(ListeCibles& liste, const Cible& element)
 {
 	// DONE: S'il reste de la place, ajouter l'élément à la fin.
-	if (liste.nbElements != liste.capacite)
+	if (liste.nbElements != liste.capacite) 
 		liste.elements[liste.nbElements++] = element;
 }
 
 
 void retirerCible(ListeCibles& liste, uint32_t id)
 {
-
+	
 	for (int i = 0; i < liste.nbElements; i++) {
-		if (liste.elements[i].id == id) {
-			liste.elements[i].id = liste.elements[i + 1].id;
+		if(liste.elements[i].id == id){
+			for(int j = i; j < liste.nbElements; j++)
+				liste.elements[j].id = liste.elements[j + 1].id;
+			liste.nbElements--;
 		}
 	}
 	//  DONE: Rechercher la cible avec le même ID et le retirer de la liste si
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
-
+	
 }
 
 
@@ -58,12 +60,12 @@ void lireCibles(istream& fichier, ListeCibles& cibles)
 		fichier.read((char*)&cibles.elements[i], sizeof(Cible));
 		ajouterCible(cibles, cibles.elements[i]);
 		i++;
-
+	
 	}
-	// DONE: Lire une 'Cible' à partir du ficher à la position
-	//       courante et l'ajouter à la liste.
+		// DONE: Lire une 'Cible' à partir du ficher à la position
+		//       courante et l'ajouter à la liste.
 
-
+	//note: utilisr ajouter cible
 }
 
 
@@ -94,12 +96,12 @@ void ecrireJournalDetection(const string& nomFichier, const JournalDetection& jo
 		ok = false;
 	else
 		ok = true;
-
+			
 	// DONE: Écrire les paramètres de mission dans le fichier.
 	//question: quelle position il faut commencer a ecrire?
 	ficBin.seekp(0, ios::cur);
 	ficBin.write((char*)&journal.parametres, sizeof(journal.parametres));
-
+	
 	// DONE: Écrire les cibles dans le fichier.
 	ficBin.seekp(0, ios::cur);
 	ficBin.write((char*)&journal.cibles, sizeof(journal.cibles));
@@ -108,28 +110,28 @@ void ecrireJournalDetection(const string& nomFichier, const JournalDetection& jo
 
 void ecrireObservation(const string& nomFichier, size_t index, const string& observation)
 {
-	// DONE: Ouvrir un fichier en lecture/écriture binaire.
-
-	// DONE: Se positionner (têtes de lecture et d'écriture) au début de la cible 
+	// TODO: Ouvrir un fichier en lecture/écriture binaire.
+	
+	// TODO: Se positionner (têtes de lecture et d'écriture) au début de la cible 
 	//       à l'index donné. On parle ici de l'index dans le fichier, donc 0 est
 	//       la première cible dans le fichier, etc.
-
-	// DONE: Lire cette cible.
+	
+	// TODO: Lire cette cible.
 	//       ATTENTION! Vous ne devez lire que cette cible isolée, pas tout le
 	//       tableau.
-
-	// DONE: Copier l'observation donnée en paramètre dans la cible.
+	
+	// TODO: Copier l'observation donnée en paramètre dans la cible.
 	//       Astuce : strcpy()
-
-	// DONE: Réécrire la cible (et seulement celle-là) dans le fichier.
+	
+	// TODO: Réécrire la cible (et seulement celle-là) dans le fichier.
 
 	fstream ficBin(nomFichier, ios::in | ios::out | ios::binary);
 
-
+	
 	ficBin.seekg(((index + 1) * sizeof(Cible)), ios::beg); //positionnement au debut de la 3e cible
 
 	Cible cible;
-	ficBin.read((char*)&cible, sizeof(cible));
+	ficBin.read((char*)&cible, sizeof(cible));	
 
 	strcpy_s(cible.observation, observation.c_str());
 
@@ -142,14 +144,9 @@ void ecrireObservation(const string& nomFichier, size_t index, const string& obs
 
 ListeCibles allouerListe(size_t capacite)
 {
-
-	ListeCibles listeDonnee;
-	listeDonnee.nbElements = 0;
-	listeDonnee.elements[listeDonnee.nbElements];
-
-
+	
 	// TODO: Créer une 'ListeDonnee' vide (nbElements = 0) avec la capacité donnée.
-
+	
 	// TODO: Allouer un tableau de 'Cible' de la taille demandée.
 	return {};
 }
@@ -164,33 +161,17 @@ void desallouerListe(ListeCibles& cibles)
 
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 {
-	ifstream ficBin(nomFichier, ios::binary);
-	if (ficBin.fail())
-		ok = false;
-	else
-		ok = true;
-
-	// DONE: Ovrir un fichier en lecture binaire.
-	// DONE: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
-	// DONE: Lire les paramètres de mission
-	JournalDetection journal;
-	ficBin.seekg(0, ios::beg);
-	ficBin.read((char*)&journal.parametres, sizeof(journal.parametres));
-
-	// DONE: Compter le nombre de cibles dans le fichier.
-	int nbCibles = 0;
-	Cible cibles;
-	while (ficBin.peek() != EOF) {
-		ficBin.read((char*)&cibles, sizeof(Cible));
-		nbCibles++;
-	}
-	ListeCibles liste;
-	allouerListe(nbCibles);
-	// DONE: Allouer la liste de cibles avec la bonne capacité.
-	lireCibles(ficBin, liste);
-
-	// DONE: Lire les cibles.
-
+	// TODO: Ouvrir un fichier en lecture binaire.
+	
+	// TODO: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
+	
+	// TODO: Lire les paramètres de mission
+	
+	// TODO: Compter le nombre de cibles dans le fichier.
+	
+	// TODO: Allouer la liste de cibles avec la bonne capacité.
+	
+	// TODO: Lire les cibles.
 	return {};
 }
 
