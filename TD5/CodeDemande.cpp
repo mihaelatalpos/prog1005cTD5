@@ -158,20 +158,35 @@ void desallouerListe(ListeCibles& cibles)
 	// TODO: Remettre les membres à zéro.
 }
 
-
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 {
-	// TODO: Ouvrir un fichier en lecture binaire.
-	
-	// TODO: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
-	
-	// TODO: Lire les paramètres de mission
-	
-	// TODO: Compter le nombre de cibles dans le fichier.
-	
-	// TODO: Allouer la liste de cibles avec la bonne capacité.
-	
-	// TODO: Lire les cibles.
+	ifstream ficBin(nomFichier, ios::binary);
+	if (ficBin.fail())
+		ok = false;
+	else
+		ok = true;
+
+	// DONE: Ovrir un fichier en lecture binaire.
+	// DONE: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
+	// DONE: Lire les paramètres de mission
+	JournalDetection journal;
+	ficBin.seekg(0, ios::beg);
+	ficBin.read((char*)&journal.parametres, sizeof(journal.parametres));
+
+	// DONE: Compter le nombre de cibles dans le fichier.
+	int nbCibles = 0;
+	Cible cibles;
+	while (ficBin.peek() != EOF) {
+		ficBin.read((char*)&cibles, sizeof(Cible));
+		nbCibles++;
+	}
+	ListeCibles liste;
+	allouerListe(nbCibles);
+	// DONE: Allouer la liste de cibles avec la bonne capacité.
+	lireCibles(ficBin, liste);
+
+	// DONE: Lire les cibles.
+
 	return {};
 }
 
