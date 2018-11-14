@@ -51,6 +51,10 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
 	// TODO: Tant que la fin de fichier n'est pas atteinte :
+	while (fichier.peek() != EOF) {
+		fichier.read((char*)&cibles, sizeof(ListeCibles));
+	//	ajouterCible(cibles, ...);
+	}
 		// TODO: Lire une 'Cible' à partir du ficher à la position
 		//       courante et l'ajouter à la liste.
 
@@ -133,6 +137,7 @@ void ecrireObservation(const string& nomFichier, size_t index, const string& obs
 
 ListeCibles allouerListe(size_t capacite)
 {
+	
 	// TODO: Créer une 'ListeDonnee' vide (nbElements = 0) avec la capacité donnée.
 	
 	// TODO: Allouer un tableau de 'Cible' de la taille demandée.
