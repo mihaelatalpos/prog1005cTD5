@@ -1,1 +1,6 @@
-.vs/TD5/v15/Browse.VC.opendb
+.vs/
+Debug/
+TD5/TD5.vcxproj
+TD5/TD5.vcxproj.filters
+TD5/TD5.vcxproj.user
+/.vs/TD5/v15/Browse.VC.opendb
