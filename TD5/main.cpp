@@ -39,7 +39,7 @@ void tests_partie1()
 	for (int i = 0; i < 3; i++) {
 		ajouterCible(cibles, ciblesTest[i]);
 		cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
-		cout << "L'ID de la cible est: " << cibles.elements[i].id << endl;
+		cout << "L'ID de la cible a l'indice " << i << " est: " << cibles.elements[i].id << endl;
 	}
 
 	ajouterCible(cibles, ciblesTest[4]);
@@ -48,11 +48,18 @@ void tests_partie1()
 
 	//TODO: Retirer la cible (retirerCible) ayant l'ID que vous avez mis en 2e, vérifier qu'il reste 2 éléments aux indices 0 et 1 dont les ID sont les bons.
 
-	fstream fichierTestCibles("fichierTestCibles.bin", ios::in | ios::out | ios::trunc | ios::binary);
+	retirerCible(cibles, 1);
+	cout << "Le nombre d'elements dans la liste est: " << cibles.nbElements << endl;
+	for (int i = 0; i < cibles.nbElements; i++) {
+		cout << "L'ID de la cible a l'indice " << i << " est: " << cibles.elements[i].id << endl;
+	}
+
 	//note: utliser la ListeCibles cibles
 
 	//TODO: Écrire les cibles (ecrireCibles) dans le fichier fichierTestCibles. Vérifier que la tête d'écriture est rendue au bon endroit.
 	
+	fstream fichierTestCibles("fichierTestCibles.bin", ios::in | ios::out | ios::trunc | ios::binary);
+
 	ecrireCibles(fichierTestCibles, cibles);
 	if (fichierTestCibles.tellp() == (cibles.nbElements * sizeof(Cible)))
 		cout << "La tete de lecture est a la bonne place." << endl;
@@ -65,7 +72,11 @@ void tests_partie1()
 	//TODO: Remettre la tête de lecture au début du fichier puis lire les cibles (lireCibles) dans cibles2. Vérifier que les 2 bonnes cibles y sont.
 	
 	fichierTestCibles.seekg(0, ios::beg);
-
+	lireCibles(fichierTestCibles, cibles2);
+	for (int i = 0; i < cibles2.nbElements; i++) {
+		cout << "L'ID de la cible 2 a l'indice " << i << " est: " << cibles2.elements[i].id << endl;
+	}
+	
 	//TODO: Créer une variable de type JournalDetection avec des valeurs quelconques et une ListeCibles déjà créé ci-dessus.
 	//TODO: Écrire ce journal (ecrireJournalDetection) dans un nouveau fichier binaire.
 	//TODO: Vérifier que ok est vrai.

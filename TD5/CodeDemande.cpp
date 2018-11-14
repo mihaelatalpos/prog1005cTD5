@@ -38,7 +38,9 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 	
 	for (int i = 0; i < liste.nbElements; i++) {
 		if(liste.elements[i].id == id){
-			liste.elements[i].id = liste.elements[i + 1].id;
+			for(int j = i; j < liste.nbElements; j++)
+				liste.elements[j].id = liste.elements[j + 1].id;
+			liste.nbElements--;
 		}
 	}
 	//  DONE: Rechercher la cible avec le même ID et le retirer de la liste si
