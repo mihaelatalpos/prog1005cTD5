@@ -54,6 +54,7 @@ void lireCibles(istream& fichier, ListeCibles& cibles)
 	// DONE: Tant que la fin de fichier n'est pas atteinte :
 	while (fichier.peek() != EOF) {
 
+		fichier.seekg(0, ios::cur);
 		fichier.read((char*)&cibles.elements[i], sizeof(Cible));
 		ajouterCible(cibles, cibles.elements[i]);
 		i++;
