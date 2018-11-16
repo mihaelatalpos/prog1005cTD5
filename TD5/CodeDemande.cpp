@@ -197,7 +197,7 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 
 	// DONE: Lire les cibles.
 
-	return {};
+	return journal;
 }
 
 #pragma endregion //}
