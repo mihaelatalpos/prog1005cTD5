@@ -136,11 +136,6 @@ void tests_partie2()
 	cout << "Le pointeur pointe vers : " << cibles3.elements << endl;
 	
 	/*TODO: Allouer une nouvelle liste de cibles de capacité 2; 
-	vérifier que son pointeur est le même que celui conservé ci-dessus.  
-	NOTE: Il n'y a pas de manière dans le standard ISO C++ pour vérifier que 
-	la mémoire a bien été désallouée.  Ce test n'est donc pas standard et pourrait 
-	échouer même si le programme est correct, mais on a la garantie qu'il peut 
-	réussir uniquement si la désallocation est faite.
 	*/
 
 	ListeCibles cibles4;
