@@ -24,6 +24,9 @@ using namespace std;
 
 void tests_partie1()
 {
+	//afficher un true or false si les tests passent
+	//identifier les tests 
+
 	cout << endl << "Debut des tests partie 2." << endl << endl;
 
 	// Dans la partie 1, on déclare une liste de cibles avec un tableau statique, puisque l'allocation dynamique est vue en classe seulement la semaine suivante.
@@ -195,7 +198,8 @@ int main ( )
 	
 	
 	// TODO: Ajouter la cible 11 (variable 'c11' ci-dessus) à la liste du journal.
-	
+	ajouterCible(ListeCibles& liste, const Cible& element)
+
 	
 	
 	
@@ -203,7 +207,6 @@ int main ( )
 	
 	
 	// TODO: Afficher les cibles pour vérifier que les opérations ci-dessus ont bien fonctionnées.
-	
 	
 	
 	

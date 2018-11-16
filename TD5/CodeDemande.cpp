@@ -47,6 +47,10 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
 	//       dans le tableau.
 
+	//faire un break a la fin du if au cas ou il y a plusieurs cibles avec mm ID
+	//voir si l'ordre est important ou non, possibilite de remplacer par derniere valeur?
+	//j < liste.nbElements - 1 ??
+
 }
 
 
