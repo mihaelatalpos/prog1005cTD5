@@ -150,7 +150,7 @@ ListeCibles allouerListe(size_t capacite)
 	listeDonnee.capacite = capacite;
 	// TODO: Créer une 'ListeDonnee' vide (nbElements = 0) avec la capacité donnée.
 
-	listeDonnee.Cible = new listeDonnee.elements[capacite];
+	listeDonnee.elements = new Cible[capacite];
 	// TODO: Allouer un tableau de 'Cible' de la taille demandée.
 	return listeDonnee;
 }
@@ -158,10 +158,14 @@ ListeCibles allouerListe(size_t capacite)
 
 void desallouerListe(ListeCibles& cibles)
 {
-	delete []cibles;
+	delete []cibles.elements;
+	// DONE: Désallouer le tableau d'élément.
+	
+	cibles.elements = 0;
+	cibles.nbElements = 0;
+	cibles.capacite = 0;
 
-	// TODO: Désallouer le tableau d'élément.
-	// TODO: Remettre les membres à zéro.??
+	// DONE: Remettre les membres à zéro.??
 }
 
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
