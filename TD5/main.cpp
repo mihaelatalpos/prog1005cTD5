@@ -24,6 +24,8 @@ using namespace std;
 
 void tests_partie1()
 {
+	cout << endl << "Debut des tests partie 2." << endl << endl;
+
 	// Dans la partie 1, on déclare une liste de cibles avec un tableau statique, puisque l'allocation dynamique est vue en classe seulement la semaine suivante.
 	Cible tableauCibles[3] = {};
 	ListeCibles cibles = { tableauCibles, 0, size(tableauCibles) };
@@ -110,8 +112,20 @@ void tests_partie1()
 
 void tests_partie2()
 {
+	cout << endl << "Debut des tests partie 2." << endl << endl;
+	
 	//TODO: Allouer une liste de cibles (allouerListe) de capacité 2; vérifier que la capacité est la bonne et que le nombre d'éléments est zéro.
+	ListeCibles cibles3;
+	cibles3 = allouerListe(2);
+	cout << "La capacite de la liste cibles3 est " << cibles3.capacite 
+		<< " et le nombre d'elements est " << cibles3.nbElements << endl;
+	
 	//TODO: Ajouter une cible la liste; ça devrait fonctionner.
+	Cible cibleTest = { (uint32_t)(1234), { 1.0, 1.0 }, "observation", "nomFichier" };
+	ajouterCible(cibles3, cibleTest);
+	cout << "L'id de la cible ajoutee est : " << cibles3.elements->id << endl;
+
+
 	//TODO: Conserver le pointeur vers le tableau de cibles dans une variable.
 	//TODO: Désallouer la liste (desallouerListe); vérifier que les valeurs sont à zéro.
 	//TODO: Allouer une nouvelle liste de cibles de capacité 2; vérifier que son pointeur est le même que celui conservé ci-dessus.  NOTE: Il n'y a pas de manière dans le standard ISO C++ pour vérifier que la mémoire a bien été désallouée.  Ce test n'est donc pas standard et pourrait échouer même si le programme est correct, mais on a la garantie qu'il peut réussir uniquement si la désallocation est faite.

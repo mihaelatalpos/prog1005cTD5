@@ -1,15 +1,6 @@
-﻿  CodeDemande.cpp
-d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(39): warning C4018: '<': signed/unsigned mismatch
-d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(41): warning C4018: '<': signed/unsigned mismatch
-d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(153): error C2039: 'Cible': is not a member of 'ListeCibles'
-  d:\polymtl\a2018\prog\td5\td5\codefourni.hpp(71): note: see declaration of 'ListeCibles'
-d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(153): error C2061: syntax error: identifier 'listeDonnee'
-d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(161): error C2440: 'delete': cannot convert from 'ListeCibles' to 'void*'
-  d:\polymtl\a2018\prog\td5\td5\codedemande.cpp(161): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-  CodeFourni.cpp
-  main.cpp
-d:\polymtl\a2018\prog\td5\td5\main.cpp(53): warning C4018: '<': signed/unsigned mismatch
-d:\polymtl\a2018\prog\td5\td5\main.cpp(76): warning C4018: '<': signed/unsigned mismatch
-d:\polymtl\a2018\prog\td5\td5\main.cpp(92): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿  main.cpp
+d:\polymtl\a2018\prog\td5\td5\main.cpp(55): warning C4018: '<': signed/unsigned mismatch
+d:\polymtl\a2018\prog\td5\td5\main.cpp(78): warning C4018: '<': signed/unsigned mismatch
+d:\polymtl\a2018\prog\td5\td5\main.cpp(94): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\time.h(506): note: see declaration of 'localtime'
-  Generating Code...
+  TD5.vcxproj -> D:\POLYMTL\A2018\prog\TD5\Debug\TD5.exe
