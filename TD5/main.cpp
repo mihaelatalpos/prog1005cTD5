@@ -187,16 +187,61 @@ int main ( )
 
 
 	// TODO: Retirer la cible 5 de la liste du journal.
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// TODO: Ajouter la cible 11 (variable 'c11' ci-dessus) à la liste du journal.
+	
+	
+	
+	
+	
+	
+	
 	// TODO: Afficher les cibles pour vérifier que les opérations ci-dessus ont bien fonctionnées.
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	// TODO: Écrire le journal de détection dans "Cibles_final.data".
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// TODO: Écrire l'observation (variable 'observation' ci-dessus) dans la
 	//       deuxième cible du fichier créé ci-dessus.
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	// TODO: Lire ce nouveau journal et l'afficher.  Toutes les cibles (autre que la 5 qu'on a enlevée) devrait y être, et la nouvelle observation devrait être sur la deuxième cible (qui a aussi l'ID 2, mais c'est une coïncidence).
 
+	
+	
+	
+	
+	
 	// TODO: Désallouer les deux listes de cibles.
 	
 	// TODO: Faire la vérification d'erreur et terminer le programme avec un
