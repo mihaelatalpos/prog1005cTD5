@@ -80,7 +80,13 @@ void tests_partie1()
 	//TODO: Créer une variable de type JournalDetection avec des valeurs quelconques et une ListeCibles déjà créé ci-dessus.
 	//TODO: Écrire ce journal (ecrireJournalDetection) dans un nouveau fichier binaire.
 	//TODO: Vérifier que ok est vrai.
-	//NOTE: La relecture du fichier pour vérifier qu'il est bon se fera seulement dans la partie 2.  Vous pouvez pour l'instant vérifier que la taille du fichier est bonne (propriétés du fichier dans Windows; la "taille" en octets devrait être une taille d'entête plus le bon nombre de cibles; attention de ne pas regarder la "taille sur disque" qui peut être différente de la "taille" dans les propriétés du fichier).  Vous pouvez aussi ouvrir le fichier binaire avec un éditeur binaire (par exemple celui de VisualStudio) pour voir si les ID sont bien dans le fichier.
+	//NOTE: La relecture du fichier pour vérifier qu'il est bon se fera seulement dans 
+	//la partie 2.  Vous pouvez pour l'instant vérifier que la taille du fichier est 
+	//bonne (propriétés du fichier dans Windows; la "taille" en octets devrait être une 
+	//taille d'entête plus le bon nombre de cibles; attention de ne pas regarder la 
+	//"taille sur disque" qui peut être différente de la "taille" dans les propriétés du fichier).  
+	//Vous pouvez aussi ouvrir le fichier binaire avec un éditeur binaire (par exemple celui de VisualStudio) 
+	//pour voir si les ID sont bien dans le fichier.
 
 	time_t t = time(0);
 	tm* now = localtime(&t);
@@ -96,8 +102,10 @@ void tests_partie1()
 	   	 
 	//TODO: Ajouter une observation (ecrireObservation) au fichier créé ci-dessus à l'indice 1 (deuxième cible).
 	//NOTE: Même chose que ci-dessus: la taille du fichier ne devrait pas avoir changée, et dans l'éditeur binaire vous devriez voir le texte après le deuxième ID.
+	
+	string observation = "observation";
+	ecrireObservation("fichierTestCibles.bin", 1, observation);
 
-	//
 }
 
 void tests_partie2()
