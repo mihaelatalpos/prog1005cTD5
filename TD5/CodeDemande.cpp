@@ -39,7 +39,7 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 	for (int i = 0; i < liste.nbElements; i++) {
 		if(liste.elements[i].id == id){
 			for(int j = i; j < liste.nbElements; j++)
-				liste.elements[j].id = liste.elements[j + 1].id;
+				liste.elements[j] = liste.elements[j + 1];
 			liste.nbElements--;
 		}
 	}

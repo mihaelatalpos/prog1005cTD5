@@ -178,11 +178,14 @@ int main ( )
 	
 	// TODO: Afficher le journal.  (Devrait afficher un journal avec 10 cibles ayant des données valides.)
 	
-	
+	afficherJournal(journal);
+
 
 
 	// TODO: Retirer la cible 5 de la liste du journal.
-	
+	uint32_t idCible = journal.cibles.elements[5].id;
+
+	retirerCible(journal.cibles, idCible);
 	
 	
 	
