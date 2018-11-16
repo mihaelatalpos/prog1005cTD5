@@ -124,17 +124,37 @@ void tests_partie2()
 	Cible cibleTest = { (uint32_t)(1234), { 1.0, 1.0 }, "observation", "nomFichier" };
 	ajouterCible(cibles3, cibleTest);
 	cout << "L'id de la cible ajoutee est : " << cibles3.elements->id << endl;
-
-
+	
 	//TODO: Conserver le pointeur vers le tableau de cibles dans une variable.
+	Cible* ptrCibles = cibles3.elements;
+
 	//TODO: Désallouer la liste (desallouerListe); vérifier que les valeurs sont à zéro.
-	//TODO: Allouer une nouvelle liste de cibles de capacité 2; vérifier que son pointeur est 
-	//le même que celui conservé ci-dessus. 
-	//NOTE: Il n'y a pas de manière dans le standard ISO C++ pour vérifier que la mémoire a bien été
-	// désallouée.  Ce test n'est donc pas standard et pourrait échouer même si le programme est 
-	// correct, mais on a la garantie qu'il peut réussir uniquement si la désallocation est faite.
+	desallouerListe(cibles3);
+	cout << "La capacite de la liste cibles3 est " << cibles3.capacite
+		<< " et le nombre d'elements est " << cibles3.nbElements << endl;
+	cout << "L'id efface est : " << ptrCibles->id << endl;
+	cout << "Le pointeur pointe vers : " << cibles3.elements << endl;
+	
+	/*TODO: Allouer une nouvelle liste de cibles de capacité 2; 
+	vérifier que son pointeur est le même que celui conservé ci-dessus.  
+	NOTE: Il n'y a pas de manière dans le standard ISO C++ pour vérifier que 
+	la mémoire a bien été désallouée.  Ce test n'est donc pas standard et pourrait 
+	échouer même si le programme est correct, mais on a la garantie qu'il peut 
+	réussir uniquement si la désallocation est faite.
+	*/
+
+	ListeCibles cibles4;
+	cibles4 = allouerListe(3);
+	if (cibles4.elements == ptrCibles) {
+		cout << "Les pointeurs sont les memes." << endl;
+		cout << cibles4.elements << endl;
+		cout << ptrCibles;
+	}
+	else
+		cout << "Les pointeurs ne sont pas les memes." << endl;
 
 	//TODO: Désallouer cette deuxième liste.
+	desallouerListe(cibles4);
 
 	//NOTE: lireJournalDetection est directement testé par ce qu'il y a à faire dans le main.
 }
@@ -152,20 +172,12 @@ int main ( )
 	Cible c11 = {11, {38.140728, -76.426494}, "Triangle gris, O orange", "cible_11.jpg"};
 	
 	// TODO: Lire le journal de détection "Cibles.data".
-	bool ok;
-	JournalDetection journal = lireJournalDetection(nomFichierCibles, ok);
-
+	
 	// TODO: Faire la vérification d'erreur et terminer le programme avec un
 	//       message s'il y a erreur.
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-	}
 	
 	// TODO: Afficher le journal.  (Devrait afficher un journal avec 10 cibles ayant des données valides.)
 	
-	
-
-
 	// TODO: Retirer la cible 5 de la liste du journal.
 	// TODO: Ajouter la cible 11 (variable 'c11' ci-dessus) à la liste du journal.
 	// TODO: Afficher les cibles pour vérifier que les opérations ci-dessus ont bien fonctionnées.
