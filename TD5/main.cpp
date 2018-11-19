@@ -112,7 +112,8 @@ void tests_partie1()
 		cout << "L'ouverture a echouee." << endl;
 	   	 
 	//TODO: Ajouter une observation (ecrireObservation) au fichier créé ci-dessus à l'indice 1 (deuxième cible).
-	//NOTE: Même chose que ci-dessus: la taille du fichier ne devrait pas avoir changée, et dans l'éditeur binaire vous devriez voir le texte après le deuxième ID.
+	//NOTE: Même chose que ci-dessus: la taille du fichier ne devrait pas avoir changée
+	// et dans l'éditeur binaire vous devriez voir le texte après le deuxième ID.
 	
 	string observation = "observation";
 	ecrireObservation("fichierTestCibles.bin", 1, observation);
@@ -189,27 +190,17 @@ int main ( )
 	afficherJournal(journal);
 	
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
+	verificationErreur(ok);
 	
 	ecrireObservation(nomFichierCiblesFinal, 2, observation);
 	
 	JournalDetection journalFinal = lireJournalDetection(nomFichierCiblesFinal, ok);
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
 
 	afficherJournal(journalFinal);	
 	desallouerListe(journal.cibles);
 	desallouerListe(journalFinal.cibles);
 
-	
-	// TODO: Faire la vérification d'erreur et terminer le programme avec un
-	//       message s'il y a erreur.
-
+	verificationErreur(ok);
 
 	return 0;
 }
