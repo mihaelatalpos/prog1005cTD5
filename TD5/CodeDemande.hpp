@@ -42,6 +42,7 @@ ListeCibles allouerListe(size_t);
 void desallouerListe(ListeCibles&);
 
 JournalDetection lireJournalDetection(const string&, bool&);
+void verificationErreur(bool);
 
 #pragma endregion //}
 

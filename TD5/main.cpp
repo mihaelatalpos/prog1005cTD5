@@ -175,79 +175,36 @@ int main ( )
 
 	// TODO: Faire la vérification d'erreur et terminer le programme avec un
 	//       message s'il y a erreur.
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
+	verificationErreur(ok);
 	
 	// TODO: Afficher le journal.  (Devrait afficher un journal avec 10 cibles ayant des données valides.)
 	
 	afficherJournal(journal);
-
-
 
 	// TODO: Retirer la cible 5 de la liste du journal.
 	uint32_t idCible = journal.cibles.elements[4].id;
 	retirerCible(journal.cibles, idCible);
 	
 	
-	
-	
-	
-	
-	
 	// TODO: Ajouter la cible 11 (variable 'c11' ci-dessus) à la liste du journal.
 	ajouterCible(journal.cibles, c11);
 	
-	
-	
-	
-	
-	
 	// TODO: Afficher les cibles pour vérifier que les opérations ci-dessus ont bien fonctionnées.
 	afficherJournal(journal);
-	
-	
-	
-	
-	
-	
-	
+
+		
 	// TODO: Écrire le journal de détection dans "Cibles_final.data".
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
 	
-	
-	
-	
-	
-	
-	
+
 	// TODO: Écrire l'observation (variable 'observation' ci-dessus) dans la
 	//       deuxième cible du fichier créé ci-dessus.
 	ecrireObservation(nomFichierCiblesFinal, 2, observation);
 	
-	
-	
-	
-	
-	
-	
-	
-	// TODO: Lire ce nouveau journal et l'afficher.  Toutes les cibles (autre que la 5 qu'on a enlevée) devrait y être, et la nouvelle observation devrait être sur la deuxième cible (qui a aussi l'ID 2, mais c'est une coïncidence).
+		// TODO: Lire ce nouveau journal et l'afficher.  Toutes les cibles (autre que la 5 qu'on a enlevée) devrait y être, et la nouvelle observation devrait être sur la deuxième cible (qui a aussi l'ID 2, mais c'est une coïncidence).
 	JournalDetection journalFinal = lireJournalDetection(nomFichierCiblesFinal, ok);
 
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
-
 	afficherJournal(journalFinal);
-	
-	
 	
 	
 	// TODO: Désallouer les deux listes de cibles.
@@ -257,7 +214,7 @@ int main ( )
 	
 	// TODO: Faire la vérification d'erreur et terminer le programme avec un
 	//       message s'il y a erreur.
-
+	verificationErreur(ok);
 
 	return 0;
 }
