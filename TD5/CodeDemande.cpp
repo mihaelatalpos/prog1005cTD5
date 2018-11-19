@@ -103,12 +103,12 @@ void ecrireJournalDetection(const string& nomFichier, const JournalDetection& jo
 
 	// DONE: Écrire les paramètres de mission dans le fichier.
 	//question: quelle position il faut commencer a ecrire?
-	ficBin.seekp(0, ios::cur);
+	ficBin.seekp(0, ios::beg);
 	ficBin.write((char*)&journal.parametres, sizeof(journal.parametres));
-
+	
 	// DONE: Écrire les cibles dans le fichier.
 	ficBin.seekp(0, ios::cur);
-	ficBin.write((char*)&journal.cibles, sizeof(journal.cibles));
+	ficBin.write((char*)journal.cibles.elements, journal.cibles.nbElements * sizeof(Cible));
 }
 
 
@@ -132,14 +132,14 @@ void ecrireObservation(const string& nomFichier, size_t index, const string& obs
 	fstream ficBin(nomFichier, ios::in | ios::out | ios::binary);
 
 
-	ficBin.seekg(((index + 1) * sizeof(Cible)), ios::beg); //positionnement au debut de la 3e cible
+	ficBin.seekg(sizeof(ParametresMission) + ((index - 1) * sizeof(Cible)), ios::beg); //positionnement au debut de la 3e cible
 
 	Cible cible;
 	ficBin.read((char*)&cible, sizeof(cible));
 
 	strcpy_s(cible.observation, observation.c_str());
 
-	ficBin.seekp((-1 * streamoff(sizeof(Cible))), ios::beg); //repositionnement au debut de la 3e cible
+	ficBin.seekp((-1 * streamoff(sizeof(Cible))), ios::cur); //repositionnement au debut de la 3e cible
 
 	ficBin.write((char*)&cible, sizeof(cible));
 
@@ -191,16 +191,17 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 	int nbCibles = 0;
 	Cible cibles;
 	while (ficBin.peek() != EOF) {
+		ficBin.seekg(0, ios::cur);
 		ficBin.read((char*)&cibles, sizeof(Cible));
 		nbCibles++;
 	}
-	ListeCibles liste;
-	allouerListe(nbCibles);
+	journal.cibles = allouerListe(nbCibles);
 	// DONE: Allouer la liste de cibles avec la bonne capacité.
-	lireCibles(ficBin, liste);
+	
+	ficBin.seekg(sizeof(journal.parametres), ios::beg);
+	lireCibles(ficBin, journal.cibles);
 
 	// DONE: Lire les cibles.
-
 	return journal;
 }
 
