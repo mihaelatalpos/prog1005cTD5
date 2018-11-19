@@ -197,6 +197,12 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 
 	return journal;
 }
+// fonction vérification d'erreur
+void verificationErreur(bool ok) {
+	if (ok == false) {
+		cout << endl << "Erreur de lecture!" << endl;
+	}
+}
 
 #pragma endregion //}
 
