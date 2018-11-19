@@ -195,8 +195,6 @@ int main ( )
 	desallouerListe(journalFinal.cibles);
 
 	verificationErreur(ok, "journalFinal");
-	//NOTE: verificationErreur est appelé trois fois dans main(). Est-ce nécessaire, ou serait-il 
-	// suffissant de l'appeler vers la fin? OU, ajouter un attribut pour savoir quand l'erreur survient?
-
+	
 	return 0;
 }

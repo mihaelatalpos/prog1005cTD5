@@ -199,6 +199,7 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 	return journal;
 }
 // fonction vérification d'erreur
+//NOTE: ajout de l'argument string pour savoir où l'erreur survient
 void verificationErreur(bool& ok, string nomFonction) {
 	if (ok == false) {
 		cout << endl << "Erreur de lecture dans: " << nomFonction << endl;
