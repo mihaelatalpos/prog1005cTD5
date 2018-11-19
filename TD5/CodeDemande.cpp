@@ -1,6 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
-/// VOTRE ENTÊTE ICI
-////////////////////////////////////////////////////////////////////////////////
+/**
+* Programme qui lit un journal de détection d'une mission à partir d'un fichier binaire,
+	le modifie et le transcrit dans un autre fichier binaire.
+	Ce fichier contient les fonctions permettant de réaliser ce programme.
+* \file   CodeDemande.cpp
+* \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
+* \date   19 novembre 2018
+* Créé le 7 novembre 2018
+*/
 
 #pragma region "Inclusions" //{
 
@@ -25,183 +31,170 @@ using namespace std;
 
 #pragma region "Fonctions" //{
 
+/**
+*  Ajoute une cible dans une liste de cibles.
+*  \param [in/out] liste  La liste qui contient toutes les cibles.
+*  \param [in]     cible  La cible que l'on veut ajouter à la liste.
+*  \return void
+*/
 void ajouterCible(ListeCibles& liste, const Cible& element)
 {
-	// DONE: S'il reste de la place, ajouter l'élément à la fin.
 	if (liste.nbElements != liste.capacite)
 		liste.elements[liste.nbElements++] = element;
 }
 
-
+/**
+*  Retire la cible correspondante au ID donné dans une liste de cibles.
+*  \param [in/out] liste  La liste qui contient toutes les cibles.
+*  \param [in]     id     Le ID de la cible que l'on veut retirer de la liste.
+*  \return void
+*/
 void retirerCible(ListeCibles& liste, uint32_t id)
 {
-
 	for (int i = 0; i < liste.nbElements; i++) {
 		if(liste.elements[i].id == id){
 			for(int j = i; j < liste.nbElements; j++)
 				liste.elements[j] = liste.elements[j + 1];
 			liste.nbElements--;
+			return;
 		}
 	}
-	//  DONE: Rechercher la cible avec le même ID et le retirer de la liste si
-	//       présent. ATTENTION! On parle bien de Cible::id, pas de l'index
-	//       dans le tableau.
-
-	//faire un break a la fin du if au cas ou il y a plusieurs cibles avec mm ID
-	//voir si l'ordre est important ou non, possibilite de remplacer par derniere valeur?
-	//j < liste.nbElements - 1 ??
-
 }
 
-
+/**
+*  Lire les cibles du fichier binaire qui contient le journal de détection
+	et les mettre dans une liste de cibles.
+*  \param [in/out] fichier  Le fichier binaire qui contient les données.
+*  \param [in/out] cibles	La liste de cibles.
+*  \return void
+*/
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
+	//se positionner après les paramètres de la mission pour lire les cibles
+	fichier.seekg(sizeof(ParametresMission), ios::beg);
+	
 	int i = 0;
-	// DONE: Tant que la fin de fichier n'est pas atteinte :
 	while (fichier.peek() != EOF) {
-
-		fichier.seekg(0, ios::cur);
 		fichier.read((char*)&cibles.elements[i], sizeof(Cible));
 		ajouterCible(cibles, cibles.elements[i]);
 		i++;
-
 	}
-		// DONE: Lire une 'Cible' à partir du ficher à la position
-		//       courante et l'ajouter à la liste.
-
-	//note: utilisr ajouter cible
 }
 
-
+/**
+*  Écrire les cibles d'une liste de cibles et
+	et les mettre dans un fichier binaire.
+*  \param [in/out] fichier  Le fichier binaire dans lequel on veut écrire.
+*  \param [in]     cibles	La liste de cibles que l'on veut transcrire.
+*  \return void
+*/
 void ecrireCibles(ostream& fichier, const ListeCibles& cibles)
 {
-	// DONE: Écrire tous les éléments de la liste dans le fichier à partir de la position courante.
-	/*Notes pour moi-meme:
-	On veut seulement ecrire les elements de la struct ListeCibles (qui contient aussi le nb et la capacite)
-	Donc, cibles.elements
-	Pour ecrire tous les elements d'un coup, il faut connaitre la longueur du tableau ou ces elements sont stores
-	Sachant qu'un element est de type stuct Cible, sizeof(Cible) est la longure de UN element
-	Donc, cibles.nbElement * sizeof(Cibles) retourne la longueur de tous les elements Cible
-	On ne peut pas utiliser directement sizeof(cibles.elements), puisque c'est un pointeur vers un tableau.
-	*/
 	fichier.seekp(0, ios::cur);
 	fichier.write((char*)cibles.elements, cibles.nbElements * sizeof(Cible));
 }
 
-
+/**
+*  Écrire les paramètres et les cibles d'un journal de détection dans un fichier binaire
+	et en vérifier sa réussite.
+*  \param [in]  nomFichier  Le nom du fichier binaire dans lequel on veut écrire.
+*  \param [in]  journal	    Le journal de détection que l'on veut transcrire.
+*  \param [out] ok          Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \return void
+*/
 void ecrireJournalDetection(const string& nomFichier, const JournalDetection& journal, bool& ok)
 {
-	// DONE: Ouvrir un fichier en écriture binaire.
-	ofstream ficBin;
-	ficBin.open(nomFichier, ios::binary);
+	ofstream fichierBinaire(nomFichier, ios::binary);
 
-	// DONE: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
-	if (ficBin.fail())
+	if (fichierBinaire.fail())
 		ok = false;
 	else
 		ok = true;
 
-	// DONE: Écrire les paramètres de mission dans le fichier.
-	//question: quelle position il faut commencer a ecrire?
-	ficBin.seekp(0, ios::beg);
-	ficBin.write((char*)&journal.parametres, sizeof(journal.parametres));
-	
-	// DONE: Écrire les cibles dans le fichier.
-	ficBin.seekp(0, ios::cur);
-	ficBin.write((char*)journal.cibles.elements, journal.cibles.nbElements * sizeof(Cible));
+	fichierBinaire.seekp(0, ios::beg);
+	fichierBinaire.write((char*)&journal.parametres, sizeof(journal.parametres));
+	ecrireCibles(fichierBinaire, journal.cibles);
 }
 
-
+/**
+*  Écrire une observation dans le fichier binaire
+	à côté de la cible correspondante à l'index donné.
+*  \param [in] nomFichier   Le nom du fichier binaire dans lequel on veut écrire.
+*  \param [in] index        L'index de la cible où l'on veut rajouter l'observation.
+*  \param [in] observation  L'obseration qu'on veut écire.
+*  \return void
+*/
 void ecrireObservation(const string& nomFichier, size_t index, const string& observation)
 {
-	// DONE: Ouvrir un fichier en lecture/écriture binaire.
-
-	// DONE: Se positionner (têtes de lecture et d'écriture) au début de la cible
-	//       à l'index donné. On parle ici de l'index dans le fichier, donc 0 est
-	//       la première cible dans le fichier, etc.
-
-	// DONE: Lire cette cible.
-	//       ATTENTION! Vous ne devez lire que cette cible isolée, pas tout le
-	//       tableau.
-
-	// DONE: Copier l'observation donnée en paramètre dans la cible.
-	//       Astuce : strcpy()
-
-	// DONE: Réécrire la cible (et seulement celle-là) dans le fichier.
-
-	fstream ficBin(nomFichier, ios::in | ios::out | ios::binary);
-
-
-	ficBin.seekg(sizeof(ParametresMission) + ((index - 1) * sizeof(Cible)), ios::beg); //positionnement au debut de la 3e cible
+	fstream fichierBinaire(nomFichier, ios::in | ios::out | ios::binary);
+	
+	//positionnement après les paramètres, au debut de la cible voulue
+	fichierBinaire.seekg(sizeof(ParametresMission) + ((index - 1) * sizeof(Cible)), ios::beg); 
 
 	Cible cible;
-	ficBin.read((char*)&cible, sizeof(cible));
+	fichierBinaire.read((char*)&cible, sizeof(cible));
 
 	strcpy_s(cible.observation, observation.c_str());
 
-	ficBin.seekp((-1 * streamoff(sizeof(Cible))), ios::cur); //repositionnement au debut de la 3e cible
+	//repositionnement au debut de la cible
+	fichierBinaire.seekp((-1 * streamoff(sizeof(Cible))), ios::cur); 
 
-	ficBin.write((char*)&cible, sizeof(cible));
-
+	fichierBinaire.write((char*)&cible, sizeof(cible));
 }
 
-
+/**
+*  Allouer une certaine capacité à une liste de cibles vide au départ;
+	indique le nombre maximal de cibles qui peuvent se trouver dans cette liste.
+*  \param [in] capacité  La capacité de cibles que l'on veut allouer à la liste.
+*  \return Une liste de cibles vide, ayant une certaine capacité et aucun éléments.
+*/
 ListeCibles allouerListe(size_t capacite)
 {
-
-	ListeCibles listeDonnee;
-	listeDonnee.nbElements = 0;
-	listeDonnee.capacite = capacite;
-	// TODO: Créer une 'ListeDonnee' vide (nbElements = 0) avec la capacité donnée.
-
-	listeDonnee.elements = new Cible[capacite];
-	// TODO: Allouer un tableau de 'Cible' de la taille demandée.
-	return listeDonnee;
+	return { new Cible[capacite], 0, capacite };
 }
 
-
+/**
+*  Désallouer l'espace utilisé pour la liste de cibles
+	et remet toutes les paramètres de la liste de cibles à 0.
+*  \param [in/out] cibles La liste que l'on veut désallouer.
+*  \return void
+*/
 void desallouerListe(ListeCibles& cibles)
 {
-	delete []cibles.elements;
-	// DONE: Désallouer le tableau d'élément.
-	
-	cibles.elements = 0;
-	cibles.nbElements = 0;
-	cibles.capacite = 0;
-
-	// DONE: Remettre les membres à zéro.??
+	delete[] cibles.elements;
+	cibles = {0};
 }
 
+/**
+*  Lire un fichier binaire qui contient un journal de détection d'une mission.
+*  \param [in]  nomFichier Le nom du fichier duquel on veut lire le journal.
+*  \param [out] ok         Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \return Un journal de détection qui contient les paramètres et les cibles du fichier binaire.
+*/
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 {
-	ifstream ficBin(nomFichier, ios::binary);
-	if (ficBin.fail())
+	ifstream fichierBinaire(nomFichier, ios::binary);
+	if (fichierBinaire.fail())
 		ok = false;
 	else
 		ok = true;
 
-	// DONE: Ovrir un fichier en lecture binaire.
-	// DONE: Indiquer la réussite ou l'échec de l'ouverture dans 'ok'.
-	// DONE: Lire les paramètres de mission
 	JournalDetection journal;
-	ficBin.seekg(0, ios::beg);
-	ficBin.read((char*)&journal.parametres, sizeof(journal.parametres));
+	fichierBinaire.seekg(0, ios::beg);
+	fichierBinaire.read((char*)&journal.parametres, sizeof(journal.parametres));
 
-	// DONE: Compter le nombre de cibles dans le fichier.
+	
 	int nbCibles = 0;
 	Cible cibles;
-	while (ficBin.peek() != EOF) {
-		ficBin.seekg(0, ios::cur);
-		ficBin.read((char*)&cibles, sizeof(Cible));
+	while (fichierBinaire.peek() != EOF) {
+		fichierBinaire.seekg(0, ios::cur);
+		fichierBinaire.read((char*)&cibles, sizeof(Cible));
 		nbCibles++;
 	}
-	journal.cibles = allouerListe(nbCibles);
-	// DONE: Allouer la liste de cibles avec la bonne capacité.
-	
-	ficBin.seekg(sizeof(journal.parametres), ios::beg);
-	lireCibles(ficBin, journal.cibles);
 
-	// DONE: Lire les cibles.
+	journal.cibles = allouerListe(nbCibles);	
+	lireCibles(fichierBinaire, journal.cibles);
+
 	return journal;
 }
 

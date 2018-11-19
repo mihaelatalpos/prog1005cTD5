@@ -1,6 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
-/// VOTRE ENTÊTE ICI
-////////////////////////////////////////////////////////////////////////////////
+/**
+* Programme qui lit un journal de détection d'une mission à partir d'un fichier binaire,
+le modifie et le transcrit dans un autre fichier binaire.
+Ce fichier contient le programme ainsi que les tests des fonctions permettant de réaliser ce programme.
+* \file   main.cpp
+* \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
+* \date   19 novembre 2018
+* Créé le 7 novembre 2018
+*/
 
 #pragma region "Inclusions" //{
 
@@ -169,88 +175,34 @@ int main ( )
 	
 	Cible c11 = {11, {38.140728, -76.426494}, "Triangle gris, O orange", "cible_11.jpg"};
 	
-	// TODO: Lire le journal de détection "Cibles.data".
 	bool ok;
 	JournalDetection journal = lireJournalDetection(nomFichierCibles, ok);
 
-	// TODO: Faire la vérification d'erreur et terminer le programme avec un
-	//       message s'il y a erreur.
 	if (ok == false) {
 		cout << endl << "Erreur de lecture!" << endl;
 		return -1;
 	}
 	
-	// TODO: Afficher le journal.  (Devrait afficher un journal avec 10 cibles ayant des données valides.)
-	
 	afficherJournal(journal);
-
-
-
-	// TODO: Retirer la cible 5 de la liste du journal.
-	uint32_t idCible = journal.cibles.elements[4].id;
-	retirerCible(journal.cibles, idCible);
-	
-	
-	
-	
-	
-	
-	
-	// TODO: Ajouter la cible 11 (variable 'c11' ci-dessus) à la liste du journal.
+	retirerCible(journal.cibles, journal.cibles.elements[4].id);
 	ajouterCible(journal.cibles, c11);
-	
-	
-	
-	
-	
-	
-	// TODO: Afficher les cibles pour vérifier que les opérations ci-dessus ont bien fonctionnées.
 	afficherJournal(journal);
 	
-	
-	
-	
-	
-	
-	
-	// TODO: Écrire le journal de détection dans "Cibles_final.data".
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
 	if (ok == false) {
 		cout << endl << "Erreur de lecture!" << endl;
 		return -1;
 	}
 	
-	
-	
-	
-	
-	
-	
-	// TODO: Écrire l'observation (variable 'observation' ci-dessus) dans la
-	//       deuxième cible du fichier créé ci-dessus.
 	ecrireObservation(nomFichierCiblesFinal, 2, observation);
 	
-	
-	
-	
-	
-	
-	
-	
-	// TODO: Lire ce nouveau journal et l'afficher.  Toutes les cibles (autre que la 5 qu'on a enlevée) devrait y être, et la nouvelle observation devrait être sur la deuxième cible (qui a aussi l'ID 2, mais c'est une coïncidence).
 	JournalDetection journalFinal = lireJournalDetection(nomFichierCiblesFinal, ok);
-
 	if (ok == false) {
 		cout << endl << "Erreur de lecture!" << endl;
 		return -1;
 	}
 
-	afficherJournal(journalFinal);
-	
-	
-	
-	
-	// TODO: Désallouer les deux listes de cibles.
+	afficherJournal(journalFinal);	
 	desallouerListe(journal.cibles);
 	desallouerListe(journalFinal.cibles);
 
