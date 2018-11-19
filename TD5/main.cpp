@@ -65,8 +65,6 @@ void tests_partie1()
 		cout << "L'ID de la cible a l'indice " << i << " est: " << cibles.elements[i].id << endl;
 	}
 
-	//note: utliser la ListeCibles cibles
-
 	//TODO: Écrire les cibles (ecrireCibles) dans le fichier fichierTestCibles. Vérifier que la tête d'écriture est rendue au bon endroit.
 	
 	fstream fichierTestCibles("fichierTestCibles.bin", ios::in | ios::out | ios::trunc | ios::binary);
@@ -178,11 +176,7 @@ int main ( )
 	
 	bool ok;
 	JournalDetection journal = lireJournalDetection(nomFichierCibles, ok);
-
-	if (ok == false) {
-		cout << endl << "Erreur de lecture!" << endl;
-		return -1;
-	}
+	verificationErreur(ok, "lireJournalDetection");
 	
 	afficherJournal(journal);
 	retirerCible(journal.cibles, journal.cibles.elements[4].id);
@@ -190,7 +184,7 @@ int main ( )
 	afficherJournal(journal);
 	
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
-	verificationErreur(ok);
+	verificationErreur(ok, "ecrireJournalDetection");
 	
 	ecrireObservation(nomFichierCiblesFinal, 2, observation);
 	
@@ -200,7 +194,9 @@ int main ( )
 	desallouerListe(journal.cibles);
 	desallouerListe(journalFinal.cibles);
 
-	verificationErreur(ok);
+	verificationErreur(ok, "journalFinal");
+	//NOTE: verificationErreur est appelé trois fois dans main(). Est-ce nécessaire, ou serait-il 
+	// suffissant de l'appeler vers la fin? OU, ajouter un attribut pour savoir quand l'erreur survient?
 
 	return 0;
 }
