@@ -4,7 +4,7 @@
 	Ce fichier contient les fonctions permettant de réaliser ce programme.
 * \file   CodeDemande.cpp
 * \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
-* \date   19 novembre 2018
+* \date   20 novembre 2018
 * Créé le 7 novembre 2018
 */
 
@@ -71,9 +71,6 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 */
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
-	//se positionner après les paramètres de la mission pour lire les cibles
-	fichier.seekg(sizeof(ParametresMission), ios::beg);
-	
 	int i = 0;
 	while (fichier.peek() != EOF) {
 		fichier.read((char*)&cibles.elements[i], sizeof(Cible));
@@ -193,18 +190,25 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 		nbCibles++;
 	}
 
-	journal.cibles = allouerListe(nbCibles);	
+	journal.cibles = allouerListe(nbCibles);
+
+	//se positionner après les paramètres de la mission pour lire les cibles
+	fichierBinaire.seekg(sizeof(ParametresMission), ios::beg);
 	lireCibles(fichierBinaire, journal.cibles);
 
 	return journal;
 }
-// fonction vérification d'erreur
-//NOTE: ajout de l'argument string pour savoir où l'erreur survient
-void verificationErreur(bool& ok, string nomFonction) {
-	if (ok == false) {
+
+/**
+*  Vérification des erreurs d'ouverture d'un fichier selon la fonction.
+*  \param [in]  nomFichier Le nom du fichier pour lequel on vérifie l'ouverture.
+*  \param [out] ok         Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \return void
+*/
+void verificationErreur(bool& ok, string nomFonction)
+{
+	if (ok == false) 
 		cout << endl << "Erreur de lecture dans: " << nomFonction << endl;
-	
-	}
 }
 
 #pragma endregion //}
