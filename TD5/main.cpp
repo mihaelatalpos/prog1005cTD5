@@ -4,7 +4,7 @@ le modifie et le transcrit dans un autre fichier binaire.
 Ce fichier contient le programme ainsi que les tests des fonctions permettant de réaliser ce programme.
 * \file   main.cpp
 * \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
-* \date   19 novembre 2018
+* \date   20 novembre 2018
 * Créé le 7 novembre 2018
 */
 

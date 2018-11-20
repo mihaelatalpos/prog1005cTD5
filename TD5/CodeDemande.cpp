@@ -4,7 +4,7 @@
 	Ce fichier contient les fonctions permettant de réaliser ce programme.
 * \file   CodeDemande.cpp
 * \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
-* \date   19 novembre 2018
+* \date   20 novembre 2018
 * Créé le 7 novembre 2018
 */
 
@@ -198,12 +198,17 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 
 	return journal;
 }
-// fonction vérification d'erreur
-void verificationErreur(bool& ok, string nomFonction) {
-	if (ok == false) {
+
+/**
+*  Vérification des erreurs d'ouverture d'un fichier selon la fonction.
+*  \param [in]  nomFichier Le nom du fichier pour lequel on vérifie l'ouverture.
+*  \param [out] ok         Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \return void
+*/
+void verificationErreur(bool& ok, string nomFonction)
+{
+	if (ok == false) 
 		cout << endl << "Erreur de lecture dans: " << nomFonction << endl;
-	
-	}
 }
 
 #pragma endregion //}
