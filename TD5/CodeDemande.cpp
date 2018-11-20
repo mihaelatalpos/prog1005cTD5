@@ -71,9 +71,6 @@ void retirerCible(ListeCibles& liste, uint32_t id)
 */
 void lireCibles(istream& fichier, ListeCibles& cibles)
 {
-	//se positionner après les paramètres de la mission pour lire les cibles
-	fichier.seekg(sizeof(ParametresMission), ios::beg);
-	
 	int i = 0;
 	while (fichier.peek() != EOF) {
 		fichier.read((char*)&cibles.elements[i], sizeof(Cible));
@@ -193,7 +190,10 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 		nbCibles++;
 	}
 
-	journal.cibles = allouerListe(nbCibles);	
+	journal.cibles = allouerListe(nbCibles);
+
+	//se positionner après les paramètres de la mission pour lire les cibles
+	fichierBinaire.seekg(sizeof(ParametresMission), ios::beg);
 	lireCibles(fichierBinaire, journal.cibles);
 
 	return journal;
