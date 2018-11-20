@@ -167,15 +167,13 @@ int main ( )
 	
 	bool ok;
 	JournalDetection journal = lireJournalDetection(nomFichierCibles, ok);
-	verificationErreur(ok, "lireJournalDetection");
-	
+
 	afficherJournal(journal);
 	retirerCible(journal.cibles, journal.cibles.elements[4].id);
 	ajouterCible(journal.cibles, c11);
 	afficherJournal(journal);
 	
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
-	verificationErreur(ok, "ecrireJournalDetection");
 	
 	ecrireObservation(nomFichierCiblesFinal, 2, observation);
 	
@@ -185,7 +183,8 @@ int main ( )
 	desallouerListe(journal.cibles);
 	desallouerListe(journalFinal.cibles);
 
-	verificationErreur(ok, "journalFinal");
+//	verificationErreur(, ok, "journalFinal");
 	
 	return 0;
 }
+

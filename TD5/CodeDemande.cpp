@@ -102,12 +102,8 @@ void ecrireCibles(ostream& fichier, const ListeCibles& cibles)
 */
 void ecrireJournalDetection(const string& nomFichier, const JournalDetection& journal, bool& ok)
 {
-	ofstream fichierBinaire(nomFichier, ios::binary);
-
-	if (fichierBinaire.fail())
-		ok = false;
-	else
-		ok = true;
+	fstream fichierBinaire(nomFichier, ios::binary|ios::out);
+	verificationErreur(fichierBinaire, ok, "ecrireJournalDetection");
 
 	fichierBinaire.seekp(0, ios::beg);
 	fichierBinaire.write((char*)&journal.parametres, sizeof(journal.parametres));
@@ -171,11 +167,8 @@ void desallouerListe(ListeCibles& cibles)
 */
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 {
-	ifstream fichierBinaire(nomFichier, ios::binary);
-	if (fichierBinaire.fail())
-		ok = false;
-	else
-		ok = true;
+	fstream fichierBinaire(nomFichier, ios::binary|ios::in);
+	verificationErreur(fichierBinaire, ok, "lireJournalDetection");
 
 	JournalDetection journal;
 	fichierBinaire.seekg(0, ios::beg);
@@ -198,19 +191,25 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 
 	return journal;
 }
-
 /**
 *  Vérification des erreurs d'ouverture d'un fichier selon la fonction.
 *  \param [in]  nomFichier Le nom du fichier pour lequel on vérifie l'ouverture.
 *  \param [out] ok         Booléen qui vérifie la réussite de l'ouverture du fichier.
 *  \return void
 */
-void verificationErreur(bool& ok, string nomFonction)
-{
-	if (ok == false) 
+void verificationErreur(fstream& nomFichier, bool& ok, string nomFonction) {
+	
+	if (nomFichier.fail()) {
+		ok = false;
 		cout << endl << "Erreur de lecture dans: " << nomFonction << endl;
+	}
+	else {
+		ok = true;
+	}
+
 }
 
 #pragma endregion //}
 
 #pragma endregion //}
+
