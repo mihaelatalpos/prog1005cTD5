@@ -27,6 +27,8 @@ using namespace std;
 
 #pragma endregion //}
 
+static const int CIBLE_A_RETIRER = 5;
+static const int CIBLE_A_MODIFIER = 2;
 
 void tests_partie1()
 {
@@ -36,7 +38,7 @@ void tests_partie1()
 	Cible tableauCibles[3] = {};
 	ListeCibles cibles = { tableauCibles, 0, size(tableauCibles) };
 
-	//création de 4 cibles ayant un ID différent
+	//création de 4 cibles ayant un ID différent (0, 1, 2 et 3)
 	Cible ciblesTest[4];
 	for (int i = 0; i < 4; i++)
 		ciblesTest[i] = { (uint32_t)(1 * i), { 1.0, 1.0 }, "observation", "nomFichier" };
@@ -46,7 +48,7 @@ void tests_partie1()
 		ajouterCible(cibles, ciblesTest[i]);
 		cout << "Le nombre d'elements dans la liste est " << cibles.nbElements 
 			<< " et l'ID de la cible ajoutee est " << cibles.elements[i].id << " -> ";
-		if (cibles.nbElements == (i + 1) && cibles.elements[i].id == (1 * i))
+		if (cibles.nbElements == (size_t)(i + 1) && cibles.elements[i].id == (size_t)(1 * i))
 			cout << boolalpha << true << endl;
 		else
 			cout << boolalpha << false << endl;
@@ -66,7 +68,7 @@ void tests_partie1()
 		cout << boolalpha << true << endl;
 	else
 		cout << boolalpha << false << endl;
-	for (int i = 0; i < cibles.nbElements; i++)
+	for (size_t i = 0; i < cibles.nbElements; i++)
 		cout << "L'ID de la cible restante a l'indice " << i << " est: " << cibles.elements[i].id << endl;
 	if (cibles.elements[0].id == 0 && cibles.elements[1].id == 2)
 		cout << " -> " << boolalpha << true << endl;
@@ -89,7 +91,7 @@ void tests_partie1()
 	cout << endl << "Verification lireCible: " << endl;
 	fichierTestCibles.seekg(0, ios::beg);
 	lireCibles(fichierTestCibles, cibles2);
-	for (int i = 0; i < cibles2.nbElements; i++)
+	for (size_t i = 0; i < cibles2.nbElements; i++)
 		cout << "L'ID de la cible 2 a l'indice " << i << " est: " << cibles2.elements[i].id << endl;
 	if (cibles2.elements[0].id == 0 && cibles2.elements[1].id == 2)
 		cout << " -> " << boolalpha << true << endl;
@@ -97,9 +99,7 @@ void tests_partie1()
 		cout << " -> " << boolalpha << false << endl;
 	
 	//création d'un journal de détection avec des paramètres de mission quelconques
-	time_t t = time(0);
-	tm* now = localtime(&t);
-	ParametresMission parametres = {"sonnom", "quelquesnotes", *now};
+	ParametresMission parametres = {"sonnom", "quelquesnotes", 0};
 	JournalDetection journalTest = {parametres, cibles};
 
 	cout << endl << "Verification de l'ouverture du fichier dans ecrireJournalDetection: " << endl;
@@ -118,7 +118,7 @@ void tests_partie1()
 void tests_partie2()
 {
 	cout << endl << endl << "Debut des tests partie 2." << endl
-		<< "--------------------------" << endl;
+						<< "--------------------------" << endl;
 	
 	cout << endl << "Verification allouerListe: " << endl;
 	ListeCibles cibles3;
@@ -151,6 +151,9 @@ void tests_partie2()
 	else
 		cout << boolalpha << false << endl;
 	cout << "Le pointeur pointe vers : " << cibles3.elements << endl << endl;
+
+	cout << endl << endl << "--------------------------" << endl
+							<< "Fin des tests." << endl;
 }
 
 int main ( )
@@ -165,17 +168,18 @@ int main ( )
 	
 	Cible c11 = {11, {38.140728, -76.426494}, "Triangle gris, O orange", "cible_11.jpg"};
 	
+	//la vérification des erreurs d'ouverture se font dans les fonctions qui prennent ok en paramètre
 	bool ok;
 	JournalDetection journal = lireJournalDetection(nomFichierCibles, ok);
 
 	afficherJournal(journal);
-	retirerCible(journal.cibles, journal.cibles.elements[4].id);
+	retirerCible(journal.cibles, journal.cibles.elements[CIBLE_A_RETIRER - 1].id);
 	ajouterCible(journal.cibles, c11);
 	afficherJournal(journal);
 	
 	ecrireJournalDetection(nomFichierCiblesFinal, journal, ok);
 	
-	ecrireObservation(nomFichierCiblesFinal, 2, observation);
+	ecrireObservation(nomFichierCiblesFinal, CIBLE_A_MODIFIER, observation);
 	
 	JournalDetection journalFinal = lireJournalDetection(nomFichierCiblesFinal, ok);
 
@@ -183,8 +187,6 @@ int main ( )
 	desallouerListe(journal.cibles);
 	desallouerListe(journalFinal.cibles);
 
-//	verificationErreur(, ok, "journalFinal");
-	
 	return 0;
 }
 

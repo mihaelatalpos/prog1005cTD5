@@ -1,6 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
-/// VOTRE ENTÊTE ICI
-////////////////////////////////////////////////////////////////////////////////
+/**
+* Programme qui lit un journal de détection d'une mission à partir d'un fichier binaire,
+	le modifie et le transcrit dans un autre fichier binaire.
+	Ce fichier contient l'entête des fonctions permettant de réaliser ce programme.
+* \file   CodeDemande.hpp
+* \author Sofia Alvarez (1894016) et Mihaela Talpos (1894329)
+* \date   20 novembre 2018
+* Créé le 7 novembre 2018
+*/
 
 #pragma once
 
@@ -43,7 +49,7 @@ void desallouerListe(ListeCibles&);
 
 JournalDetection lireJournalDetection(const string&, bool&);
 
-void verificationErreur(fstream&, bool&, string);
+void verificationErreur(fstream&, bool&, const string&);
 
 #pragma endregion //}
 

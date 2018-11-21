@@ -52,9 +52,9 @@ void ajouterCible(ListeCibles& liste, const Cible& element)
 */
 void retirerCible(ListeCibles& liste, uint32_t id)
 {
-	for (int i = 0; i < liste.nbElements; i++) {
+	for (size_t i = 0; i < liste.nbElements; i++) {
 		if(liste.elements[i].id == id){
-			for(int j = i; j < liste.nbElements; j++)
+			for(size_t j = i; j < liste.nbElements; j++)
 				liste.elements[j] = liste.elements[j + 1];
 			liste.nbElements--;
 			return;
@@ -167,23 +167,21 @@ void desallouerListe(ListeCibles& cibles)
 */
 JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 {
-	fstream fichierBinaire(nomFichier, ios::binary|ios::in);
+	fstream fichierBinaire(nomFichier, ios::binary | ios::in);
 	verificationErreur(fichierBinaire, ok, "lireJournalDetection");
 
 	JournalDetection journal;
 	fichierBinaire.seekg(0, ios::beg);
 	fichierBinaire.read((char*)&journal.parametres, sizeof(journal.parametres));
 
-	
-	int nbCibles = 0;
+	int nCibles = 0;
 	Cible cibles;
 	while (fichierBinaire.peek() != EOF) {
-		fichierBinaire.seekg(0, ios::cur);
 		fichierBinaire.read((char*)&cibles, sizeof(Cible));
-		nbCibles++;
+		nCibles++;
 	}
 
-	journal.cibles = allouerListe(nbCibles);
+	journal.cibles = allouerListe(nCibles);
 
 	//se positionner après les paramètres de la mission pour lire les cibles
 	fichierBinaire.seekg(sizeof(ParametresMission), ios::beg);
@@ -191,22 +189,22 @@ JournalDetection lireJournalDetection(const string& nomFichier, bool& ok)
 
 	return journal;
 }
+
 /**
 *  Vérification des erreurs d'ouverture d'un fichier selon la fonction.
-*  \param [in]  nomFichier Le nom du fichier pour lequel on vérifie l'ouverture.
-*  \param [out] ok         Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \param [in]  fichier      Le fichier pour lequel on vérifie l'ouverture.
+*  \param [out] ok           Booléen qui vérifie la réussite de l'ouverture du fichier.
+*  \param [in]  nomFonction  La fonction dans laquelle on fait l'ouverture.
 *  \return void
 */
-void verificationErreur(fstream& nomFichier, bool& ok, string nomFonction) {
-	
-	if (nomFichier.fail()) {
+void verificationErreur(fstream& fichier, bool& ok, const string& nomFonction) 
+{	
+	if (fichier.fail()) {
 		ok = false;
 		cout << endl << "Erreur de lecture dans: " << nomFonction << endl;
 	}
-	else {
+	else 
 		ok = true;
-	}
-
 }
 
 #pragma endregion //}
